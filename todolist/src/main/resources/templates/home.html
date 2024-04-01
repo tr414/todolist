@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Confirmation Page</title>
+</head>
+<body>
+<h4><a href="/logout">Logout</a> </h4>
+	
+	<table>
+		<tbody>
+			<tr th:each="task : ${tasks}">
+		        <td th:text="${task.taskName}" />
+		        <td> 
+			        <form method="post" action="task">
+			        	<input type="hidden" name="taskId" th:value="${task.id}">
+			        	<input type="submit" value="Open Task">
+			        </form> 
+		        </td>
+		        <td> 
+			        <form method="post" action="done">
+			        	<input type="hidden" name="taskId" th:value="${task.id}">
+			        	<input type="submit" value="Done">
+			        </form> 
+		        </td>
+		        <td> 
+			        <form method="post" action="delete">
+			        	<input type="hidden" name="taskId" th:value="${task.id}">
+			        	<input type="submit" value="Delete">
+			        </form> 
+		        </td>
+		    </tr>
+	    </tbody>
+	</table>
+	
+	<form method="post" action="create-task">
+		<!-- Use the 'placeholder' tag to be more helpful -->
+		<input type="text" name="taskname" placeholder="Task Name">
+		<input type="checkbox" id="urgent" name="urgent" value="Urgent">
+		<label for="urgent"> Urgent </label>
+		<input type="checkbox" id="important" name="important" value="Important">
+		<label for="important"> Important </label>
+		<input type="submit" value="Create Task">
+	</form>
+</body>
+</html>

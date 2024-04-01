@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Confirmation Page</title>
+</head>
+<body>
+	<h4><a href="/logout">Logout</a> </h4>
+	<h4><a href="/home">Back To Task List</a> </h4>
+	<h3 th:text="${task.taskName}"></h3>
+	
+	<form method="post" action="update-task">
+       	<input type="hidden" name="taskId" th:value="${task.id}">
+       	<textarea name="notes" th:text="${task.notes}"></textarea>
+       	<input type="submit" value="Done">
+	</form> 
+</body>
+</html>
