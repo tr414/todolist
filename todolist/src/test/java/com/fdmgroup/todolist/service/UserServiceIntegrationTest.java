@@ -3,6 +3,8 @@ package com.fdmgroup.todolist.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import com.fdmgroup.todolist.model.User;
 import com.fdmgroup.todolist.repository.UserRepository;
@@ -45,6 +48,21 @@ public class UserServiceIntegrationTest {
 		assertNotNull(savedUser);
 		assertNotNull(savedUser.getId());
 		assertEquals("username", savedUser.getUsername());
+	}
+	
+	@Test
+	public void testAddUserDoesNotSaveDuplicateUsername() {
+		//Arrange
+		User user = new User("username", "password");
+		User user1 = new User("username", "password");
+		
+		//Act
+		userService.createUser(user);
+		
+		//Assert
+		assertThrows(DataIntegrityViolationException.class, () -> {
+			userService.createUser(user1);
+		});
 	}
 	
 	@Test

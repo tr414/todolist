@@ -24,10 +24,13 @@ public class User {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
-	@Column(unique=true)
+	@Column(unique=true, nullable=false)
 	private String username;
 	
+	@Column(nullable=false)
 	private String password;
+	
+	@Column(nullable=false)
 	private String roles;
 	
 	@OneToMany(mappedBy="user", cascade=CascadeType.ALL, orphanRemoval=true)

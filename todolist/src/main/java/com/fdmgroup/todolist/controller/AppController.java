@@ -93,12 +93,6 @@ public class AppController {
 		return("redirect:/home");
 	}
 	
-	@GetMapping("/delete-user")
-	public String deleteUser() {
-		userService.deleteUserById(1L);
-		return("redirect:/home");
-	}
-	
 	/**
 	 * This method is called when a user clicks on 'open task' for any task in their home page
 	 * Opens up more details about the task for the user to review
@@ -120,7 +114,7 @@ public class AppController {
 		Task task = taskService.findTaskById(taskId.longValue()).orElse(null);
 		String notes = request.getParameter("notes");
 		task.setNotes(notes);
-		taskService.createTask(task);
+		taskService.updateTask(task);
 		model.addAttribute("task", task);
 		return ("task");
 	}
