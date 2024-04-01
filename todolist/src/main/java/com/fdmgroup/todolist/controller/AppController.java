@@ -46,7 +46,6 @@ public class AppController {
 	 */
 	@GetMapping("/home")
 	public String confirmationPage(Model model, Principal principal) {
-		System.out.println(principal.getClass() + " " + principal.getName());
 		User user = userService.findByUsername(principal.getName()).orElse(null);
 		List<Task> tasks = taskService.findByUserIs(user);
 		model.addAttribute("tasks", tasks);
@@ -68,10 +67,8 @@ public class AppController {
 	 */
 	@PostMapping("/create-user")
 	public String processUser(HttpServletRequest request) {
-		System.out.println("Creating new user...");
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		System.out.println(username + " " + password);
 		User user = new User(username, encoder.encode(password));
 		userService.createUser(user);
 		return("redirect:/home");
@@ -90,7 +87,6 @@ public class AppController {
 		String taskName = request.getParameter("taskname");
 		boolean urgent = request.getParameter("urgent") != null ? true : false;
 		boolean important = request.getParameter("important") != null ? true : false;
-		System.out.println(urgent + " " + important);
 		User user = userService.findByUsername(principal.getName()).orElse(null);
 		Task task = new Task(user, taskName, urgent, important);
 		taskService.createTask(task);
