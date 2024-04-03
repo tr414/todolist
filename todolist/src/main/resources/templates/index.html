@@ -1,12 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Index Page</title>
+<link rel="stylesheet" th:href="@{/css/styles.css}" />
+<title>Welcome</title>
 </head>
 <body>
-<h4><a href="create-user">Create New Profile</a> </h4>
-<h4><a href="login">Login</a> </h4>
-<h2>Hello, User</h2>
+	<div class="topnav">
+		<a href="/create-user">Create New Account</a>
+		<a href="/login">Login</a>
+	</div>
+
+	<div class="welcome">
+		<h2>Hello...</h2>
+		<h2>Welcome to the to-do list app you never knew you needed.</h2>
+	</div>
+
 </body>
 </html>

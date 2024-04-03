@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/styles.css}" />
+<title>Admin Console</title>
+</head>
+<body>
+	<div class="topnav">
+		<a href="/logout">Logout</a>
+		<a href="/home">My Tasks</a>
+	</div>
+	
+	<div class="userform">
+		<h3>Add New Category</h3>
+		<form method="post" action="category">
+			<input type="text" name="name" placeholder="Category"><br>
+			<input type="submit" value="Create Category">
+		</form>
+	</div>
+</body>
+</html>

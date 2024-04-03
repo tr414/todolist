@@ -1,17 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Create Product</title>
+<link rel="stylesheet" th:href="@{/css/styles.css}" />
+<title>User Registration</title>
 </head>
 <body>
-<h4><a href="/">Back To Home</a> </h4>
-	<form method="post" action="create-user">
-			<!-- Use the 'placeholder' tag to be more helpful -->
-			<input type="text" name="username" placeholder="Username">
-			<!-- Better to use input type="password" rather than "text" -->
-			<input type="password" name="password" placeholder="Password">
+	<div class="topnav">
+		<a href="/">Back To Home</a>
+		<a href="/login">Login</a>
+	</div>
+	
+	<div class="userform">
+		<h1>I Want To Be Productive</h1>
+		<form method="post" action="create-user">
+			<input type="text" name="username" placeholder="Username"><br>
+			<input type="password" name="password" placeholder="Password"><br>
 			<input type="submit" value="Create Profile">
-	</form>
+		</form>
+	</div>
 </body>
 </html>
