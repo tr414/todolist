@@ -7,10 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class TodolistApplication {
-	private static final Logger LOGGER = LogManager.getLogger("com.fdmgroup.todolist");
 	public static void main(String[] args) {
 		SpringApplication.run(TodolistApplication.class, args);
-		LOGGER.info("Info Log");
 	}
 
 }

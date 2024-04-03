@@ -17,10 +17,19 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepo;
 	
-	private static final Logger LOGGER = LogManager.getRootLogger();
+	private static final Logger LOGGER = LogManager.getLogger("userService");
 
 	public Optional<User> createUser(User user) {
-		return Optional.ofNullable(userRepo.save(user));
+		Optional<User> createdUser;
+		try {
+			createdUser = Optional.ofNullable(userRepo.save(user));
+		} catch (Exception e) {
+			LOGGER.error("Unable to create new user with username: {}", user.getUsername(), e);
+			return Optional.ofNullable(null);
+		}
+		
+		LOGGER.info("Created new user with ID: {}", user.getId());
+		return createdUser;
 	}
 	
 	public Optional<User> findUserById(Long id) {
@@ -36,11 +45,25 @@ public class UserService {
 	}
 	
 	public Optional<User> updateUser(User user) {
-		return Optional.ofNullable(userRepo.save(user));
+		Optional<User> updatedUser;
+		try {
+			updatedUser = Optional.ofNullable(userRepo.save(user));
+		} catch (Exception e) {
+			LOGGER.error("Unable to update user details for user with ID: {}", user.getId(), e);
+			return Optional.ofNullable(null);
+		}
+		
+		LOGGER.info("Updated details for user with id: {}", user.getId());
+		return updatedUser;
 	}
 	
 	public void deleteUserById(Long id) {
-		userRepo.deleteById(id);
+		try {
+			userRepo.deleteById(id);
+			LOGGER.info("Deleted user with ID: {}", id);
+		} catch (Exception e) {
+			LOGGER.error("Unable to delete user with ID: {}", id, e);
+		}
 	}
 
 }

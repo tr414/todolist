@@ -3,9 +3,11 @@ package com.fdmgroup.todolist.controller;
 import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -27,13 +29,17 @@ public class AppController {
 
 	@Autowired
 	private UserService userService;
+	
 	@Autowired 
 	private TaskService taskService;
+	
 	@Autowired
 	private CategoryService categoryService;
 	
 	@Autowired
 	private PasswordEncoder encoder;
+	
+	private static final Logger LOGGER = LogManager.getLogger("controller");
 	
 	
 	@GetMapping("/")
@@ -57,8 +63,16 @@ public class AppController {
 	 * Display these tasks on the home page
 	 */
 	@GetMapping("/home")
-	public String confirmationPage(Model model, Principal principal) {
+	public String homePage(Model model, Principal principal) {
 		User user = userService.findByUsername(principal.getName()).orElse(null);
+		
+		if (user.equals(null)) {
+			LOGGER.warn("Unable to find user by username: {}", principal.getName());
+			return("redirect:/logout");
+		}
+		
+		LOGGER.info("Fetching tasks for user: {}", user.getId());
+		
 		List<Task> tasks = taskService.findNotDoneTasks(user);
 		model.addAttribute("tasks", tasks);
 		return("home");
@@ -89,12 +103,20 @@ public class AppController {
 	 * @return
 	 */
 	@PostMapping("/create-user")
-	public String processUser(HttpServletRequest request) {
+	public String processUser(HttpServletRequest request, Model model) {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		User user = new User(username, encoder.encode(password));
-		userService.createUser(user);
-		return("redirect:/home");
+		Optional<User> createdUser = userService.createUser(user);
+		
+		if (createdUser.isEmpty()) {
+			LOGGER.warn("Unable to create user with username: {}", username);
+			model.addAttribute("error", true);
+			return("redirect:/create-user");
+		}
+		
+		LOGGER.info("New user created with id: {}", createdUser.get().getId());
+		return("redirect:/login");
 	}
 	
 	
@@ -109,9 +131,25 @@ public class AppController {
 		String taskName = request.getParameter("taskname");
 		boolean urgent = request.getParameter("urgent") != null ? true : false;
 		boolean important = request.getParameter("important") != null ? true : false;
+		
 		User user = userService.findByUsername(principal.getName()).orElse(null);
-		Task task = new Task(user, taskName, urgent, important);
-		taskService.createTask(task);
+		Task task;
+		
+		try {
+			task = new Task(user, taskName, urgent, important);
+			Optional<Task> createdTask = taskService.createTask(task);
+			
+			if (createdTask.isEmpty()) {
+				LOGGER.warn("Unable to persist new task for user: {}", user.getId());
+			}
+			
+		} catch(Exception e) {
+			LOGGER.error("Unable to create a new Task object for user: {}", user.getId(), e);
+			return("redirect:/home");
+		}
+		
+		
+		
 		return("redirect:/home");
 	}
 	
@@ -169,7 +207,7 @@ public class AppController {
 		Task task = taskService.findTaskById(taskId.longValue()).orElse(null);
 		task.setDone(true);
 		task.setTaskCompletedTime();
-		taskService.createTask(task);
+		taskService.updateTask(task);
 		return("redirect:/home");
 	}
 

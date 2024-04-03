@@ -1,47 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration xmlns="http://logging.apache.org/log4j/2.0/config">
+<Configuration>
 
-	<!-- can be used to define variable constants -->
 	<Properties>
 	
-		<!-- in relation to the current location i.e. src/main/logs -->
-		<!-- creates a variable that can be referenced elsewhere in the configuration -->
-		<Property name="basePath">src\\main\\logs</Property>
+		<Property name="basePath">src/main/logs</Property>
 		
 	</Properties>
 	
-	
-	
-	<!-- Appenders: define destination & contain Layouts that define message structure -->
 	<Appenders>
 	
-		<!-- File Appender -->
-		<File name="FILE" fileName="${basePath}/logging.log" append="true">
-		
-			<!-- Layouts: https://sematext.com/blog/log4j2-tutorial/#log4j-2-layouts -->
+		<File name="RootLogFile" fileName="${basePath}/rootLogs.log" append="true">
 			<PatternLayout pattern="%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %C{2} (%F:%L) - %m%n" />
 		</File>
 		
-		<!-- Console Appender -->
-		<Console name="STDOUT" target="SYSTEM_OUT">
+		<File name="SpringLogFile" fileName="${basePath}/springLogs.log" append="true">
+			<PatternLayout pattern="%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %C{2} (%F:%L) - %m%n" />
+		</File>
+		
+		<File name="UserServiceLogFile" fileName="${basePath}/userServiceLogs.log" append="true">
+			<PatternLayout pattern="%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %C{2} (%F:%L) - %m%n" />
+		</File>
+		
+		<File name="TaskServiceLogFile" fileName="${basePath}/taskServiceLogs.log" append="true">
+			<PatternLayout pattern="%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %C{2} (%F:%L) - %m%n" />
+		</File>
+		
+		<File name="ControllerLogFile" fileName="${basePath}/controllerLogs.log" append="true">
+			<PatternLayout pattern="%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %C{2} (%F:%L) - %m%n" />
+		</File>
+	
+		<Console name="Console" target="SYSTEM_OUT">
+			<LevelRangeFilter minLevel="ERROR" maxLevel="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
 			<PatternLayout pattern="%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %C{2} (%F:%L) - %m%n" />
 		</Console>
 		
 	</Appenders>
 	
-	
-		
-	<!-- Loggers: define the primary object that will log the record -->
 	<Loggers>
 		
-		<!-- a logger definition that inherits from the root definition  -->
-		<Logger name="com.fdmgroup.todolist" level="info" >
-			<AppenderRef ref="STDOUT" />
+		<Logger name="userService" level="info" additivity="false">
+			<AppenderRef ref="UserServiceLogFile" />
+			<AppenderRef ref="Console"/>
+		</Logger>
+		
+		<Logger name="taskService" level="info" additivity="false">
+			<AppenderRef ref="TaskServiceLogFile" />
+			<AppenderRef ref="Console"/>
+		</Logger>
+		
+		<Logger name="spring" level="info" additivity="false">
+			<AppenderRef ref="SpringLogFile" />
+			<AppenderRef ref="Console"/>
+		</Logger>
+		
+		<Logger name="controller" level="info" additivity="false">
+			<AppenderRef ref="ControllerLogFile" />
+			<AppenderRef ref="Console"/>
 		</Logger>	
 			
-		<!-- root logger definition -->
 		<Root level="info">
-			<AppenderRef ref="FILE" />
+			<AppenderRef ref="RootLogFile" />
+			<AppenderRef ref="Console"/>
 		</Root>
 		
 	</Loggers>
