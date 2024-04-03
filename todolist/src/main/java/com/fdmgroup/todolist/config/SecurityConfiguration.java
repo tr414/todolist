@@ -40,7 +40,7 @@ public class SecurityConfiguration {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 			.authorizeHttpRequests((authorize) -> authorize
-				.requestMatchers("/", "/create-user").permitAll()
+				.requestMatchers("/", "/create-user", "/css/**").permitAll()
 				.anyRequest().authenticated()	
 			)
 			.httpBasic(Customizer.withDefaults())

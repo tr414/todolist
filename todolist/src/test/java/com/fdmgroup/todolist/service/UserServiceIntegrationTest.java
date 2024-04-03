@@ -18,12 +18,13 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.fdmgroup.todolist.model.User;
 import com.fdmgroup.todolist.repository.UserRepository;
 
 
-
+@ActiveProfiles("test")
 @SpringBootTest(webEnvironment = WebEnvironment.NONE)
 public class UserServiceIntegrationTest {
 	@Autowired
