@@ -13,6 +13,10 @@
 			<PatternLayout pattern="%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %C{2} (%F:%L) - %m%n" />
 		</File>
 		
+		<File name="SecurityLogFile" fileName="${basePath}/securityLogs.log" append="true">
+			<PatternLayout pattern="%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %C{2} (%F:%L) - %m%n" />
+		</File>
+		
 		<File name="SpringLogFile" fileName="${basePath}/springLogs.log" append="true">
 			<PatternLayout pattern="%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %C{2} (%F:%L) - %m%n" />
 		</File>
@@ -37,6 +41,10 @@
 	</Appenders>
 	
 	<Loggers>
+		
+		<Logger name="org.springframework.security" level="DEBUG" additivity="false">
+            <AppenderRef ref="SecurityLogFile"/>
+        </Logger>
 		
 		<Logger name="userService" level="info" additivity="false">
 			<AppenderRef ref="UserServiceLogFile" />
