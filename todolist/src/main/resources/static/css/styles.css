@@ -1,0 +1,65 @@
+.topnav {
+  overflow: hidden;
+}
+
+.topnav a {
+  float: right;
+  text-align: center;
+  color: black;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.welcome {
+	font-size: 40px;
+	text-align: center;
+	margin: 0;
+	position: absolute;
+	top: 40%;
+	left: 50%;
+	-ms-transform: translate(-50%, -40%);
+	transform: translate(-50%, -40%);
+}
+
+.userform {
+	text-align: center;
+	margin: 0;
+	position: absolute;
+	top: 40%;
+	left: 50%;
+	-ms-transform: translate(-50%, -40%);
+	transform: translate(-50%, -40%);
+}
+
+.userform h1 {
+	font-size:48px;
+}
+
+.userform input {
+	font-size: 18px;
+	margin: 8px;
+	
+}
+
+.filters {
+	text-align: center;
+	margin: 0;
+	position: absolute;
+	top: 10%;
+	left: 50%;
+	-ms-transform: translate(-50%, -40%);
+	transform: translate(-50%, -40%);
+}
+
+.tasks {
+	width: 100%;
+}
+
+.tasks table {
+	width: 100%;
+}
+
+.newtask {
+	
+}
