@@ -34,6 +34,30 @@ public class TaskService {
 		return taskRepo.findByUserIs(user);
 	}
 	
+	public List<Task> findImportantTasks(User user) {
+		return taskRepo.findByDoneFalseAndImportantTrueAndUserIs(user);
+	}
+	
+	public List<Task> findUrgentTasks(User user) {
+		return taskRepo.findByDoneFalseAndUrgentTrueAndUserIs(user);
+	}
+	
+	public List<Task> findUrgentAndImportantTasks(User user) {
+		return taskRepo.findByDoneFalseAndUrgentTrueAndImportantTrueAndUserIs(user);
+	}
+	
+	public List<Task> findDoneTasks(User user) {
+		return taskRepo.findByDoneTrueAndUserIs(user);
+	}
+	
+	public List<Task> findNotDoneTasks(User user) {
+		return taskRepo.findByDoneFalseAndUserIs(user);
+	}
+	
+	public List<Task> filterTasks(User user, boolean done, boolean urgent, boolean important) {
+		return taskRepo.findByUserIsAndDoneIsAndUrgentIsAndImportantIs(user, done, urgent, important);
+	}
+	
 	public Optional<Task> updateTask(Task task) {
 		return Optional.ofNullable(taskRepo.save(task));
 	}
