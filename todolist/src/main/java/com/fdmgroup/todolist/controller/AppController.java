@@ -112,7 +112,7 @@ public class AppController {
 		if (createdUser.isEmpty()) {
 			LOGGER.warn("Unable to create user with username: {}", username);
 			model.addAttribute("error", true);
-			return("redirect:/create-user");
+			return("create-user");
 		}
 		
 		LOGGER.info("New user created with id: {}", createdUser.get().getId());
