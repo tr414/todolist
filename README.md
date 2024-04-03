@@ -22,7 +22,8 @@ Introduce analytics to allow users to track the amount of time they spend on dif
 Introduce features to enhance user focus and/or productivity e.g. in-app Pomodoro timer, AI assistant to guide through tasks and prioritisation.
 
 ## Authors and acknowledgment
-TBC
+Logging reference video: https://www.youtube.com/watch?v=T_lWpqOWaE0
+How to save and access credentials in an env.properties file: https://medium.com/@Marou_arnault/spring-boot-hide-your-credentials-fb1ca22ae911
 
 
 ## Project status
