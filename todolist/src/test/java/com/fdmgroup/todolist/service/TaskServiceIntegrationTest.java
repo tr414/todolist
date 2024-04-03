@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
@@ -97,6 +98,23 @@ public class TaskServiceIntegrationTest {
 		// Assert
 		assertFalse(updatedSavedTask.isUrgent());
 		assertEquals(savedTask.getId(), updatedSavedTask.getId());
+	}
+	
+	@Test
+	public void testFindNotDoneTasksReturnsListOfPendingTasks() {
+		// Arrange
+		Task task1 = new Task(user, "task1", true, true);
+		Task task2 = new Task(user, "task2", true, true);
+		task1.setDone(true);
+		taskService.createTask(task1);
+		taskService.createTask(task2);
+		
+		//Act
+		List<Task> notDoneTasks = taskService.findNotDoneTasks(user);
+		
+		//Assert that the list is of size 1, and that the task it contains is task2
+		assertEquals(1, notDoneTasks.size());
+		assertEquals("task2", notDoneTasks.get(0).getTaskName());
 	}
 	
 	

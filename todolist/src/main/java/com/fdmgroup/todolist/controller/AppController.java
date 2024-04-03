@@ -2,8 +2,10 @@ package com.fdmgroup.todolist.controller;
 
 import java.math.BigDecimal;
 import java.security.Principal;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -65,7 +67,7 @@ public class AppController {
 	@GetMapping("/home")
 	public String homePage(Model model, Principal principal) {
 		User user = userService.findByUsername(principal.getName()).orElse(null);
-		
+		List<Category> categories = categoryService.findAllCategorys();
 		if (user.equals(null)) {
 			LOGGER.warn("Unable to find user by username: {}", principal.getName());
 			return("redirect:/logout");
@@ -75,6 +77,7 @@ public class AppController {
 		
 		List<Task> tasks = taskService.findNotDoneTasks(user);
 		model.addAttribute("tasks", tasks);
+		model.addAttribute("categories", categories);
 		return("home");
 	}
 	
@@ -131,12 +134,21 @@ public class AppController {
 		String taskName = request.getParameter("taskname");
 		boolean urgent = request.getParameter("urgent") != null ? true : false;
 		boolean important = request.getParameter("important") != null ? true : false;
+		String[] categories = request.getParameterValues("categories");
+		Set<Category> taskCategories = new HashSet<>();
+		
+		for (String c : categories) {
+			Category cat = categoryService.findCategoryByCategoryName(c).orElse(null);
+			taskCategories.add(cat);
+		}
+		
 		
 		User user = userService.findByUsername(principal.getName()).orElse(null);
 		Task task;
 		
 		try {
 			task = new Task(user, taskName, urgent, important);
+			task.setCategories(taskCategories);
 			Optional<Task> createdTask = taskService.createTask(task);
 			
 			if (createdTask.isEmpty()) {

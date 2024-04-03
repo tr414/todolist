@@ -45,7 +45,7 @@ public class Task {
 	// Use Set instead of list for efficiency purposes. 
 	// Source: https://vladmihalcea.com/the-best-way-to-use-the-manytomany-annotation-with-jpa-and-hibernate/
 	@ManyToMany(fetch=FetchType.EAGER)
-	@JoinTable(name="ITEM_CATEGORY", joinColumns= @JoinColumn(name="FK_ITEM_ID"),
+	@JoinTable(name="TASK_CATEGORY", joinColumns= @JoinColumn(name="FK_TASK_ID"),
 	inverseJoinColumns = @JoinColumn(name="FK_CATEGORY_ID"))
 	private Set<Category> categories = new HashSet<>();
 	

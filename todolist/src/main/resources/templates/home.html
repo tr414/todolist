@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	<head>
 		<meta charset="UTF-8">
 		<title>Tasks</title>
@@ -10,6 +10,7 @@
 	
 		<div class="topnav">
 			<a href="/logout">Logout</a>
+			<a href="/category" sec:authorize="hasRole('ADMIN')">Admin Console</a>
 		</div>
 	
 		<div class="filters">
@@ -23,7 +24,7 @@
 				<input type="submit" value="Filter">
 			</form>
 		</div>
-		
+		<span sec:authentication="name"></span>
 		<div class="tasks">
 			<table>
 				<tbody>
@@ -59,6 +60,10 @@
 				<label for="urgent"> Urgent </label>
 				<input type="checkbox" id="important" name="important" value="Important">
 				<label for="important"> Important </label>
+				<label for="cars">Categories</label>
+				<select name="categories" id="categories" multiple>
+				  <option  th:each="category : ${categories}" th:value="${category.categoryName}" th:text="${category.categoryName}"></option>
+				</select>
 				<input type="submit" value="Create Task">
 			</form>
 		</div>	
