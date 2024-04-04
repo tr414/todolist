@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  * loadUserByUsername method.
  * For more information: https://www.youtube.com/watch?v=awcCiqBO36E
  */
+@SuppressWarnings("serial")
 public class SecurityUser implements UserDetails {
 	
 	private final User user;
