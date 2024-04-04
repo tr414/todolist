@@ -259,7 +259,7 @@ public class AppController {
 	 * It allows them to create new categories in the 'Category' Database.
 	 * Tasks can then be tagged by category, which can help with task prioritisation
 	 * for the user, as well as provide more data to be analysed.
-	 * @return
+	 * @return category.html
 	 */
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/category")
@@ -274,7 +274,7 @@ public class AppController {
 	 * Tasks can then be tagged by category, which can help with task prioritisation
 	 * for the user, as well as provide more data to be analysed.
 	 * @param request
-	 * @return
+	 * @return category.html
 	 */
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("/category")
