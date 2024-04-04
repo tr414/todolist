@@ -2,17 +2,49 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Confirmation Page</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Task Details</title>
+<link rel="stylesheet" th:href="@{/css/styles.css}" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+	integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I"
+	crossorigin="anonymous">
 </head>
 <body>
-	<h4><a href="/logout">Logout</a> </h4>
-	<h4><a href="/home">Back To Task List</a> </h4>
-	<h3 th:text="${task.taskName}"></h3>
+	<div class="topnav">
+		<a href="/logout">Logout</a> 
+		<a href="/category" sec:authorize="hasRole('ADMIN')">Admin Console</a>
+		<a href="/home">My Open Tasks</a>
+	</div>
 	
-	<form method="post" action="update-task">
-       	<input type="hidden" name="taskId" th:value="${task.id}">
-       	<textarea name="notes" th:text="${task.notes}"></textarea>
-       	<input type="submit" value="Done">
-	</form> 
+	<div class="container">
+		<h3 th:text="${task.taskName}"></h3>
+		
+		<div class="row tags">
+			Tags: <span th:each="category : ${task.categories}"></span>
+		</div>
+		
+		<div class="row categories">
+		</div>
+		
+		<form method="post" action="update-task">
+	       	<input type="hidden" name="taskId" th:value="${task.id}">
+	       	<label for="notes">Notes</label><br>
+	       	<textarea name="notes" th:text="${task.notes}"></textarea>
+	       	<input type="submit" class="btn btn-primary btn-sm" value="Add Notes">
+		</form>
+	
+	</div>
+	 
+	
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+		integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
+		crossorigin="anonymous"></script>
 </body>
 </html>

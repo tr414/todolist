@@ -19,7 +19,6 @@
 	<div class="topnav">
 		<a href="/logout">Logout</a> 
 		<a href="/category" sec:authorize="hasRole('ADMIN')">Admin Console</a>
-		<a href="/completed">My Closed Tasks</a>
 		<a href="/home">My Open Tasks</a>
 	</div>
 
@@ -29,30 +28,6 @@
 			<h1 class="text-center">Hello,  <span sec:authentication="principal.username"></span></h1>
 		</div>
 		
-		<div class="d-flex justify-content-center filter-form">
-			<form method="post" action="filter" class="form-inline">
-				<div class="form-row align-items-center">
-					<div class="form-check-inline">
-						<input type="checkbox" id="done" name="done" value="Done"> 
-						<label for="done"> Done </label>
-					</div>
-					
-					<div class="form-check-inline">
-						<input type="checkbox" id="urgent" name="urgent" value="Urgent"> 
-						<label for="urgent">Urgent </label>
-					</div>
-					
-					<div class="form-check-inline">
-						<input type="checkbox" id="important" name="important" value="Important">
-						<label for="important">Important</label>
-					</div>
-					 
-					 <div class="form-check-inline">
-					 	<input type="submit" class="btn btn-sm btn-primary" value="Filter">
-					 </div>
-				</div>
-			</form>
-		</div>
 			
 		<div class="tasklist">
 			<div class="row task" th:each="task : ${tasks}">
@@ -78,33 +53,6 @@
 			</div>
 		</div>
 		
-		<form method="post" class="taskform" action="create-task">
-			<div class="row">
-				<div class="col-6">
-					<input type="text" class="form-control" name="taskname" placeholder="Task Name">
-				</div>
-				<div class="col">
-					<input type="checkbox" id="urgent" name="urgent" value="Urgent">
-					<label for="urgent"> Urgent </label>
-				</div>
-				<div class="col">
-					<input type="checkbox"  id="important" name="important" value="Important"> 
-					<label for="important"> Important </label>
-				</div>
-				<div class="col">
-					<label for="cars">Categories</label>
-					<select name="categories" id="categories" multiple>
-					<option th:each="category : ${categories}"
-						th:value="${category.categoryName}"
-						th:text="${category.categoryName}"></option>
-					</select>
-				</div>
-				<div class="col">
-					<input type="submit" class="btn btn-sm btn-primary" value="Create Task">
-				</div>
-				
-			</div>
-		</form>
 	</div>
 
 	<script

@@ -86,7 +86,7 @@ public class AppController {
 		User user = userService.findByUsername(principal.getName()).orElse(null);
 		List<Task> tasks = taskService.findDoneTasks(user);
 		model.addAttribute("tasks", tasks);
-		return("home");
+		return("completed");
 	}
 	
 	@GetMapping("/urgent")
@@ -137,11 +137,13 @@ public class AppController {
 		String[] categories = request.getParameterValues("categories");
 		Set<Category> taskCategories = new HashSet<>();
 		
-		for (String c : categories) {
-			Category cat = categoryService.findCategoryByCategoryName(c).orElse(null);
-			taskCategories.add(cat);
-		}
 		
+		if (categories != null) {
+			for (String c : categories) {
+				Category cat = categoryService.findCategoryByCategoryName(c).orElse(null);
+				taskCategories.add(cat);
+			}
+		}
 		
 		User user = userService.findByUsername(principal.getName()).orElse(null);
 		Task task;
@@ -231,7 +233,9 @@ public class AppController {
 		
 		User user = userService.findByUsername(principal.getName()).orElse(null);
 		List<Task> tasks = taskService.filterTasks(user, done, urgent, important);
+		List<Category> categories = categoryService.findAllCategorys();
 		model.addAttribute("tasks", tasks);
+		model.addAttribute("categories",categories);
 		return("home");	
 	}
 	
