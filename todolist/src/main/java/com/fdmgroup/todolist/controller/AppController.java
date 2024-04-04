@@ -84,6 +84,12 @@ public class AppController {
 	@GetMapping("/completed")
 	public String completedTaskPage(Model model, Principal principal) {
 		User user = userService.findByUsername(principal.getName()).orElse(null);
+		
+		if (user.equals(null)) {
+			LOGGER.warn("Unable to find user by username: {}", principal.getName());
+			return("redirect:/logout");
+		}
+		
 		List<Task> tasks = taskService.findDoneTasks(user);
 		model.addAttribute("tasks", tasks);
 		return("completed");
@@ -92,6 +98,12 @@ public class AppController {
 	@GetMapping("/urgent")
 	public String urgentTaskPage(Model model, Principal principal) {
 		User user = userService.findByUsername(principal.getName()).orElse(null);
+		
+		if (user.equals(null)) {
+			LOGGER.warn("Unable to find user by username: {}", principal.getName());
+			return("redirect:/logout");
+		}
+		
 		List<Task> tasks = taskService.findUrgentTasks(user);
 		model.addAttribute("tasks", tasks);
 		return("home");
@@ -137,13 +149,12 @@ public class AppController {
 	 * @return
 	 */
 	@PostMapping("/create-task")
-	public String processTask(HttpServletRequest request, Principal principal) {
+	public String createTask(HttpServletRequest request, Principal principal) {
 		String taskName = request.getParameter("taskname");
 		boolean urgent = request.getParameter("urgent") != null ? true : false;
 		boolean important = request.getParameter("important") != null ? true : false;
 		String[] categories = request.getParameterValues("categories");
 		Set<Category> taskCategories = new HashSet<>();
-		
 		
 		if (categories != null) {
 			for (String c : categories) {
@@ -168,9 +179,6 @@ public class AppController {
 			LOGGER.error("Unable to create a new Task object for user: {}", user.getId(), e);
 			return("redirect:/home");
 		}
-		
-		
-		
 		return("redirect:/home");
 	}
 	

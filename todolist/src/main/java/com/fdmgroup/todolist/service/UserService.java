@@ -1,3 +1,7 @@
+/**
+ * Simple user service to query user related data from the UserRepository.
+ * @author tanayrishi
+ */
 package com.fdmgroup.todolist.service;
 
 import java.util.List;
