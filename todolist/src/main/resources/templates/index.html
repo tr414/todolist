@@ -2,8 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" th:href="@{/css/styles.css}" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Welcome</title>
+<link rel="stylesheet" th:href="@{/css/styles.css}" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+	integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I"
+	crossorigin="anonymous">
+</head>
 </head>
 <body>
 	<div class="topnav">
@@ -13,7 +20,7 @@
 
 	<div class="welcome">
 		<h2>Hello...</h2>
-		<h2>Welcome to the to-do list app you never knew you needed.</h2>
+		<h2><a href="/login">Sign in</a> or <a href="/create-user">Register</a> to start using the application</h2>
 	</div>
 
 </body>

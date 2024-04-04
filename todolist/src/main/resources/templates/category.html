@@ -2,20 +2,27 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" th:href="@{/css/styles.css}" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Console</title>
+<link rel="stylesheet" th:href="@{/css/styles.css}" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+	integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I"
+	crossorigin="anonymous">
+</head>
 </head>
 <body>
 	<div class="topnav">
 		<a href="/logout">Logout</a>
-		<a href="/home">My Tasks</a>
+		<a href="/home">My Open Tasks</a>
 	</div>
 	
 	<div class="userform">
 		<h3>Add New Category</h3>
 		<form method="post" action="category">
-			<input type="text" name="name" placeholder="Category"><br>
-			<input type="submit" value="Create Category">
+			<input type="text" class="form-control form-control-sm" name="name" placeholder="Category"><br>
+			<input type="submit" class="btn btn-primary btn-sm" value="Create Category">
 		</form>
 	</div>
 </body>
