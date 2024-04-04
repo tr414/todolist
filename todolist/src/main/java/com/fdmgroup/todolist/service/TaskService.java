@@ -23,7 +23,17 @@ public class TaskService {
 	private static final Logger LOGGER = LogManager.getLogger("taskService");
 
 	public Optional<Task> createTask(Task task) {
-		return Optional.ofNullable(taskRepo.save(task));
+		Optional<Task> createdTask;
+		
+		try {
+			createdTask = Optional.ofNullable(taskRepo.save(task));
+		} catch(Exception e) {
+			LOGGER.error("Unable to create new task in Task Service.", e);
+			return Optional.ofNullable(null);
+		}
+		
+		LOGGER.info("Created new task with id: {}", createdTask.get().getId());
+		return createdTask;
 	}
 	
 	public Optional<Task> findTaskById(Long id) {
@@ -63,10 +73,25 @@ public class TaskService {
 	}
 	
 	public Optional<Task> updateTask(Task task) {
-		return Optional.ofNullable(taskRepo.save(task));
+		Optional<Task> updatedTask;
+		
+		try {
+			updatedTask = Optional.ofNullable(taskRepo.save(task));
+		} catch(Exception e) {
+			LOGGER.error("Unable to update task {} in Task Service.", task.getId(), e);
+			return Optional.ofNullable(null);
+		}
+		
+		LOGGER.info("Created new task with id: {}", updatedTask.get().getId());
+		return updatedTask;
 	}
 	
 	public void deleteTaskById(Long id) {
-		taskRepo.deleteById(id);
+		try {
+			taskRepo.deleteById(id);
+			LOGGER.info("Deleted task with ID: {}", id);
+		} catch (Exception e) {
+			LOGGER.error("Unable to delete task with ID: {}", id, e);
+		}
 	}
 }

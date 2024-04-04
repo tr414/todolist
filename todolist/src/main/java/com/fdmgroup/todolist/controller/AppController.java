@@ -109,6 +109,13 @@ public class AppController {
 	public String processUser(HttpServletRequest request, Model model) {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
+		
+		if ( username.equals("") || password.equals("") ) {
+			LOGGER.warn("Unable to create user with empty username and/or password");
+			model.addAttribute("error", true);
+			return("create-user");
+		}
+		
 		User user = new User(username, encoder.encode(password));
 		Optional<User> createdUser = userService.createUser(user);
 		
@@ -265,6 +272,10 @@ public class AppController {
 	@PostMapping("/category")
 	public String createCategory(HttpServletRequest request) {
 		String categoryName = request.getParameter("name");
+		if (categoryName.equals("")) {
+			LOGGER.warn("Did not receive valid category name. Category not created.");
+			return("category");
+		}
 		categoryService.createCategory(new Category(categoryName));
 		return("category");
 	}
